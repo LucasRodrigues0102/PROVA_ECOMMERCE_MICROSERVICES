@@ -1,0 +1,20 @@
+CREATE DATABASE product_db;
+
+USE product_db;
+
+CREATE TABLE products (
+    ID_Produto INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    preco DECIMAL(10,2) NOT NULL
+);
+
+CREATE DATABASE user_db;
+
+USE user_db;
+
+CREATE TABLE users (
+    ID_Usuarios INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    senha VARCHAR(100) NOT NULL
+);
