@@ -1,19 +1,18 @@
-import random
 from sqlalchemy.orm import Session
-from app.models.payment import Pagamento
+from app.models.payment import Payment
 
-def execute_payment(db: Session, pagamento_data):
-    id_gerado = random.randint(100000, 999999) 
-    
-    novo_pagamento = Pagamento(
-        ID_Pagamento=id_gerado,
-        id_pedido=pagamento_data.id_pedido,
-        valor=pagamento_data.valor,
-        status="APROVADO" 
+def process_payment(db: Session, payment_data):
+    # regra simples de simulação
+    status = "APROVADO" if payment_data.valor > 0 else "RECUSADO"
+
+    payment = Payment(
+        id_pedido=payment_data.id_pedido,
+        valor=payment_data.valor,
+        status=status
     )
-    
-    db.add(novo_pagamento)
+
+    db.add(payment)
     db.commit()
-    db.refresh(novo_pagamento)
-    
-    return novo_pagamento
+    db.refresh(payment)
+
+    return payment

@@ -2,15 +2,15 @@ from pydantic import BaseModel
 from typing import List
 from decimal import Decimal
 
-class ItemPedidoCreate(BaseModel):
+class OrderItemCreate(BaseModel):
     id_produto: int
     quantidade: int
 
-class PedidoCreate(BaseModel):
+class OrderCreate(BaseModel):
     id_usuario: int
-    itens: List[ItemPedidoCreate]
+    itens: List[OrderItemCreate]
 
-class ItemPedidoResponse(BaseModel):
+class OrderItemResponse(BaseModel):
     id_produto: int
     produto_nome: str
     preco_unitario: Decimal
@@ -19,12 +19,12 @@ class ItemPedidoResponse(BaseModel):
     class Config:
         from_attributes = True
 
-class PedidoResponse(BaseModel):
+class OrderResponse(BaseModel):
     ID_Pedido: int
     id_usuario: int
     status: str
     total: Decimal
-    itens: List[ItemPedidoResponse]
+    itens: List[OrderItemResponse]
 
     class Config:
         from_attributes = True

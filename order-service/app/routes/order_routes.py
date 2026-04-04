@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.database.connection import SessionLocal
-from app.schemas.order_schema import PedidoCreate, PedidoResponse
+from app.schemas.order_schema import OrderCreate, OrderResponse
 from app.services.order_service import process_create_order, get_order_by_id
 
 router = APIRouter()
@@ -13,11 +13,11 @@ def get_db():
     finally:
         db.close()
 
-@router.post("/orders", response_model=PedidoResponse, status_code=status.HTTP_201_CREATED)
-def create_order(order: PedidoCreate, db: Session = Depends(get_db)):
+@router.post("/orders", response_model=OrderResponse, status_code=status.HTTP_201_CREATED)
+def create_order(order: OrderCreate, db: Session = Depends(get_db)):
     return process_create_order(db, order)
 
-@router.get("/orders/{id}", response_model=PedidoResponse)
+@router.get("/orders/{id}", response_model=OrderResponse)
 def get_order(id: int, db: Session = Depends(get_db)):
     pedido = get_order_by_id(db, id)
     if not pedido:

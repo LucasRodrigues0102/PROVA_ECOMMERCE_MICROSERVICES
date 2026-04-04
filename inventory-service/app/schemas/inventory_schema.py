@@ -1,11 +1,11 @@
 from pydantic import BaseModel
 
-class EstoqueResponse(BaseModel):
+class InventoryResponse(BaseModel):
     id_produto: int
     quantidade: int
 
     class Config:
         from_attributes = True
 
-class EstoqueUpdate(BaseModel):
+class InventoryUpdate(BaseModel):
     quantidade: int

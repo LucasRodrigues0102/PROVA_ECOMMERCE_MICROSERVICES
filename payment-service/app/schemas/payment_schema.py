@@ -1,12 +1,14 @@
 from pydantic import BaseModel
 from decimal import Decimal
 
-class PagamentoCreate(BaseModel):
+class PaymentCreate(BaseModel):
     id_pedido: int
     valor: Decimal
 
-class PagamentoResponse(BaseModel):
+class PaymentResponse(BaseModel):
     ID_Pagamento: int
+    id_pedido: int
+    valor: Decimal
     status: str
 
     class Config:

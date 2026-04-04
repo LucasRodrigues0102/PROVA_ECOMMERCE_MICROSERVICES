@@ -1,7 +1,7 @@
 import requests
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
-from app.models.order import Pedido, ItemPedido
+from app.models.order import Order, OrderItem
 
 # Portas conforme o README (8001 e 8002 já existem. Vamos usar 8004 e 8005)
 PRODUCT_SERVICE_URL = "http://localhost:8001"
@@ -34,12 +34,12 @@ def process_create_order(db: Session, order_data):
         })
 
     # 2. Salvar Pedido no Banco
-    novo_pedido = Pedido(id_usuario=order_data.id_usuario, status="PROCESSANDO", total=total_pedido)
+    novo_pedido = Order(id_usuario=order_data.id_usuario, status="PROCESSANDO", total=total_pedido)
     db.add(novo_pedido)
     db.flush()
 
     for item in itens_validados:
-        db.add(ItemPedido(id_pedido=novo_pedido.ID_Pedido, **item))
+        db.add(OrderItem(id_pedido=novo_pedido.ID_Pedido, **item))
 
     # 3. Baixar Estoque
     for item in order_data.itens:
@@ -63,4 +63,4 @@ def process_create_order(db: Session, order_data):
     return novo_pedido
 
 def get_order_by_id(db: Session, order_id: int):
-    return db.query(Pedido).filter(Pedido.ID_Pedido == order_id).first()
+    return db.query(Order).filter(Order.ID_Pedido == order_id).first()
